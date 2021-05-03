@@ -1,19 +1,11 @@
 import { AuthToken, UserInfo } from '@/types/auth';
+import { getUserInfo } from './utils';
 
 const defaultAuthToken: AuthToken = {
   accessToken: localStorage.getItem('ACCESS_TOKEN') || '',
   refreshToken: localStorage.getItem('REFRESH_TOKEN') || '',
 };
 
-const defaultUserInfo: UserInfo = {
-  id: '',
-  username: '',
-  fullName: '',
-  firstName: '',
-  lastName: '',
-  email: '',
-  roles: [],
-};
 
 export type State = {
   token: AuthToken;
@@ -22,5 +14,5 @@ export type State = {
 
 export const state: State = {
   token: defaultAuthToken,
-  user: defaultUserInfo,
+  user: getUserInfo(defaultAuthToken.accessToken),
 };
