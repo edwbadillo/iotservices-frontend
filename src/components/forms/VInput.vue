@@ -10,6 +10,7 @@
       :required="required"
       :disabled="disabled"
       :readonly="readonly"
+      :value="modelValue"
       :class="{ 'is-invalid': error, 'is-valid': success && !error }"
     />
     <div v-if="error" class="invalid-feedback">
