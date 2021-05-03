@@ -35,12 +35,20 @@ const routes: Array<RouteRecordRaw> = [
     name: 'App',
     redirect: '/app/home',
     component: () => import('@/components/layouts/App.vue'),
+    meta: {
+      requiresAuth: true,
+    },
     children: [
       {
         path:'home',
         name: 'Home',
         component: () => import('@/views/Home.vue'),
-      }
+      },
+      {
+        path:'profile',
+        name: 'Profile',
+        component: () => import('@/views/profile/Index.vue'),
+      },
     ]
   },
 ];

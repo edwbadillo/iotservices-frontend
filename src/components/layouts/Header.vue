@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light py-3 shadow-sm">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light py-3 border-bottom">
     <div class="container">
       <router-link class="navbar-brand" :to="{name: 'Home'}">
         IOT FRONTEND
@@ -22,7 +22,7 @@
               {{username}}
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">Profile</a></li>
+              <li><router-link class="dropdown-item" :to="{name: 'Profile'}">Profile</router-link></li>
               <li><a class="dropdown-item" href="#">Change password</a></li>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="#">Logout</a></li>
