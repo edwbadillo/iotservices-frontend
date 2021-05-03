@@ -1,9 +1,16 @@
 import { UserInfo } from "@/types/auth";
 import jwtdecode from 'jwt-decode';
 
-export function getUserInfo(jwtToken: string): UserInfo {
+export function getUserInfo(jwtToken: any): UserInfo {
+  if (!jwtToken) {
+    return fromPayload({});
+  }
   const payload: any = jwtdecode(jwtToken);
-  const user: UserInfo = {
+  return fromPayload(payload);
+}
+
+function fromPayload(payload: any) : UserInfo {
+  return {
     id:         payload.sub || '',
     username:   payload.preferred_username || '',
     email:      payload.email || '',
@@ -11,6 +18,5 @@ export function getUserInfo(jwtToken: string): UserInfo {
     lastName:   payload.family_name || '',
     fullName:   payload.name || '',
     roles:      payload.realm_access?.roles || []
-  };
-  return user;
+  } as UserInfo;
 }
