@@ -1,7 +1,7 @@
 import { UserInfo } from "@/types/auth";
 import jwtdecode from 'jwt-decode';
 
-export function getUserInfo(jwtToken: any): UserInfo {
+export function getUserInfo(jwtToken: string): UserInfo {
   if (!jwtToken) {
     return fromPayload({});
   }

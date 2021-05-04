@@ -1,4 +1,4 @@
-import { axios } from '@/plugins/axios';
+import { axios, removeBearerToken } from '@/plugins/axios';
 import { AuthToken, ChangePasswordForm, LoginCredentials, UserRegistration } from '@/types/auth';
 import { snakeCaseKeys } from '@/utils/obj';
 import { AxiosResponse } from 'axios';
@@ -6,6 +6,12 @@ import { AxiosResponse } from 'axios';
 export function login(credentials: LoginCredentials): Promise<AxiosResponse<AuthToken>>{
   const url = `${process.env?.VUE_APP_AUTH_URL}/token`
   return axios.post<AuthToken>(url, credentials)
+}
+
+export function refreshToken(refreshToken: string): Promise<AxiosResponse<AuthToken>>{
+  removeBearerToken();
+  const url = `${process.env?.VUE_APP_AUTH_URL}/token/refresh`
+  return axios.post(url, {refresh_token: refreshToken})
 }
 
 export function registerUser(data: UserRegistration): Promise<AxiosResponse<AuthToken>> {

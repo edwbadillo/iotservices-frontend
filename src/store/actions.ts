@@ -1,4 +1,4 @@
-import { login, registerUser } from '@/services/auth';
+import { login, refreshToken, registerUser } from '@/services/auth';
 import { AuthToken, LoginCredentials, UserRegistration } from '@/types/auth';
 import { camelCaseKeys } from '@/utils/obj';
 import { ActionContext, ActionTree } from 'vuex';
@@ -14,12 +14,14 @@ type AugmentedActionContext = {
 
 export enum ActionTypes {
   LOGIN = 'LOGIN',
-  REGISTER_USER = 'REGISTER_USER'
+  REGISTER_USER = 'REGISTER_USER',
+  REFRESH_TOKEN = 'REFRESH_TOKEN',
 }
 
 export type Actions = {
   [ActionTypes.LOGIN]({ commit }: AugmentedActionContext, payload: LoginCredentials): Promise<void>;
   [ActionTypes.REGISTER_USER]({ commit }: AugmentedActionContext, payload: UserRegistration): Promise<void>;
+  [ActionTypes.REFRESH_TOKEN]({ commit }: AugmentedActionContext, payload: string): Promise<any>;
 };
 
 export const actions: ActionTree<State, State> & Actions = {
@@ -43,6 +45,20 @@ export const actions: ActionTree<State, State> & Actions = {
           resolve()
         })
         .catch((error) => reject(error))
+    })
+  },
+  [ActionTypes.REFRESH_TOKEN]({ commit }, refreshTokenStr) {
+    return new Promise((resolve, reject) => {
+      refreshToken(refreshTokenStr)
+        .then((response) => {
+          const tokenResponse = camelCaseKeys(response.data) as AuthToken;
+          commit(MutationTypes.SET_TOKEN, tokenResponse)
+          resolve(tokenResponse.accessToken);
+        })
+        .catch((error) => {
+          commit(MutationTypes.LOGOUT, undefined);
+          reject(error);
+        })
     })
   },
 }
