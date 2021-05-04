@@ -16,12 +16,14 @@ export enum ActionTypes {
   LOGIN = 'LOGIN',
   REGISTER_USER = 'REGISTER_USER',
   REFRESH_TOKEN = 'REFRESH_TOKEN',
+  LOGOUT = 'LOGOUT',
 }
 
 export type Actions = {
   [ActionTypes.LOGIN]({ commit }: AugmentedActionContext, payload: LoginCredentials): Promise<void>;
   [ActionTypes.REGISTER_USER]({ commit }: AugmentedActionContext, payload: UserRegistration): Promise<void>;
   [ActionTypes.REFRESH_TOKEN]({ commit }: AugmentedActionContext, payload: string): Promise<any>;
+  [ActionTypes.LOGOUT]({ commit }: AugmentedActionContext): Promise<void>;
 };
 
 export const actions: ActionTree<State, State> & Actions = {
@@ -61,4 +63,8 @@ export const actions: ActionTree<State, State> & Actions = {
         })
     })
   },
+  [ActionTypes.LOGOUT]({commit}) {
+    commit(MutationTypes.LOGOUT, undefined);
+    return Promise.resolve();
+  }
 }

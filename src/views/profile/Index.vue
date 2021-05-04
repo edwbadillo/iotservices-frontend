@@ -39,7 +39,7 @@
             <router-link class="w-100 btn btn-primary" :to="{name: 'Change Password'}">
             Change password
             </router-link>
-            <button class="w-100 btn btn-danger mt-2">
+            <button class="w-100 btn btn-danger mt-2" @click="logout">
               Logout
             </button>
           </div>
@@ -51,14 +51,23 @@
 
 <script lang="ts">
 import { getStore } from '@/store'
+import { ActionTypes } from '@/store/actions';
 import { defineComponent } from 'vue'
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
   setup() {
     const store = getStore();
     const user = store.state.user;
+    const router = useRouter();
+
+    const logout = () => {
+      store.dispatch(ActionTypes.LOGOUT, undefined)
+        .then(() => router.push({ name: 'Login'}))
+    }
+
     return {
-      user
+      user, logout,
     }
   },
 })

@@ -25,7 +25,7 @@
               <li><router-link class="dropdown-item" :to="{name: 'Profile'}">Profile</router-link></li>
               <li><router-link class="dropdown-item" :to="{name: 'Change Password'}">Change password</router-link></li>
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Logout</a></li>
+              <li><a class="dropdown-item" href="#" @click="logout">Logout</a></li>
             </ul>
           </li>
         </ul>
@@ -36,14 +36,23 @@
 
 <script lang="ts">
 import { getStore } from '@/store'
+import { ActionTypes } from '@/store/actions';
 import { computed, defineComponent } from 'vue'
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
   setup() {
     const store = getStore();
-    const username = computed(() => store.getters.firstName )
+    const router = useRouter();
+    const username = computed(() => store.getters.firstName)
+
+    const logout = () => {
+      store.dispatch(ActionTypes.LOGOUT, undefined)
+        .then(() => router.push({ name: 'Login'}))
+    }
+
     return {
-      username
+      username, logout,
     }
   },
 })
