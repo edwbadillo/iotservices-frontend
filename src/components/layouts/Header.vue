@@ -23,7 +23,7 @@
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li><router-link class="dropdown-item" :to="{name: 'Profile'}">Profile</router-link></li>
-              <li><a class="dropdown-item" href="#">Change password</a></li>
+              <li><router-link class="dropdown-item" :to="{name: 'Change Password'}">Change password</router-link></li>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="#">Logout</a></li>
             </ul>

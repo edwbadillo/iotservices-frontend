@@ -36,9 +36,9 @@
 
         <div class="col-sm-12 col-md-4 mt-3 d-flex flex-column align-items-center">
           <div>
-            <button class="w-100 btn btn-primary">
+            <router-link class="w-100 btn btn-primary" :to="{name: 'Change Password'}">
             Change password
-            </button>
+            </router-link>
             <button class="w-100 btn btn-danger mt-2">
               Logout
             </button>
