@@ -1,11 +1,14 @@
 import { FormErrors } from '@/types/forms';
 import { AxiosError } from 'axios';
+import { camelCaseKeys } from './obj';
 
 export function getFormErrors(error: AxiosError): FormErrors {
   if (error.response?.status == 400) {
     const data = error.response.data;
     if (data.errors) {
-      return data as FormErrors;
+      const err = data as FormErrors;
+      err.errors = camelCaseKeys(err.errors)
+      return err
     }
   }
   return {
