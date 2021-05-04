@@ -1,3 +1,4 @@
+import { setBearerToken } from '@/plugins/axios';
 import { AuthToken, UserInfo } from '@/types/auth';
 import { getUserInfo } from './utils';
 
@@ -6,6 +7,9 @@ const defaultAuthToken: AuthToken = {
   refreshToken: localStorage.getItem('REFRESH_TOKEN') || '',
 };
 
+if (defaultAuthToken.accessToken) {
+  setBearerToken(defaultAuthToken.accessToken);
+}
 
 export type State = {
   token: AuthToken;
